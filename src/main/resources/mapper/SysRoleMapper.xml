@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.coco.mapper.SysRoleMapper">
+    <insert id="insert" parameterType="com.coco.pojo.SysRole" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO sys_role (name, description, flag)
+        VALUES (#{name}, #{description}, #{flag})
+    </insert>
+
+    <update id="update" parameterType="com.coco.pojo.SysRole">
+        UPDATE sys_role
+        SET name = #{name}, description = #{description}, flag = #{flag}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteById" parameterType="java.lang.Integer">
+        DELETE FROM sys_role WHERE id = #{id}
+    </delete>
+
+    <select id="selectById" resultType="com.coco.pojo.SysRole">
+        SELECT * FROM sys_role WHERE id = #{id}
+    </select>
+
+    <select id="selectAll" resultType="com.coco.pojo.SysRole">
+        SELECT * FROM sys_role
+    </select>
+    <select id="selectBySearch" resultType="com.coco.pojo.SysRole">
+        SELECT * FROM sys_role
+        <where>
+            <if test="search != null and search != ''">
+                AND (name LIKE CONCAT('%', #{search}, '%')
+                OR description LIKE CONCAT('%', #{search}, '%')
+                OR flag LIKE CONCAT('%', #{search}, '%'))
+            </if>
+        </where>
+    </select>
+</mapper>
