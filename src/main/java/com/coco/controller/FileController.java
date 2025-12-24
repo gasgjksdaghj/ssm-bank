@@ -16,7 +16,7 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/file")
 public class FileController {
-
+   //自动注入 Spring 的环境变量
     @Autowired
     private org.springframework.core.env.Environment env;
 
@@ -28,6 +28,7 @@ public class FileController {
      * @return 文件访问URL
      * @throws IOException
      */
+    //指定该方法处理 POST 请求，路径为 /file/upload。
     @PostMapping("/upload")
     @ResponseBody
     public String upload(@RequestParam MultipartFile file, HttpServletRequest request) throws IOException {
@@ -58,7 +59,7 @@ public class FileController {
         // 保存文件
         file.transferTo(destFile);
 
-        // 构建文件访问URL
+        // 构建完整的文件访问URL
         String scheme = request.getScheme();
         String serverName = request.getServerName();
         int serverPort = request.getServerPort();

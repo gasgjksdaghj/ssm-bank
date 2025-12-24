@@ -1,8 +1,9 @@
+<%--使用Vue.js框架和ECharts库来展示用户角色统计--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="true" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>角色统计 - ECharts 示例</title>
+    <title>角色统计 </title>
     <script src="vue2_resource/vue@2.6.14.js"></script>
     <link rel="stylesheet" href="vue2_resource/index.css">
     <script src="vue2_resource/elementui.js"></script>
@@ -34,7 +35,7 @@
 </head>
 <body>
 <div id="app">
-    <h1>Hello world</h1>
+    <h1>欢迎来到银行</h1>
     <div data-role="admin" class="container">
         <div class="chart-container" ref="roleChart"></div>
     </div>
@@ -42,6 +43,7 @@
 
 <script>
     new Vue({
+        //指定Vue实例挂载到DOM元素#app上
         el: '#app',
         data() {
             return {
@@ -51,6 +53,9 @@
         mounted() {
             this.fetchRoleStatistics();
         },
+        //使用Axios发送GET请求到后端接口/dashboard/role-statistics中（由DashboardController提供），获取角色统计数据。
+        //成功后，将返回的数据存储在roleStatistics中，并调用renderChart()方法渲染图表。
+       //如果请求失败，捕获错误并显示错误消息。
         methods: {
             fetchRoleStatistics() {
                 axiosWrapper.get('/dashboard/role-statistics')

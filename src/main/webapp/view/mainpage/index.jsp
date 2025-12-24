@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>vue2-element-admin</title>
+    <title>主页面</title>
     <link rel="stylesheet" href="vue2_resource/index.css">
     <style>
         body {
@@ -93,10 +93,6 @@
             border-right: none;
         }
 
-        .el-menu--collapse {
-            width: 64px;
-        }
-
         .el-menu-item, .el-submenu__title {
             height: 50px;
             line-height: 50px;
@@ -142,9 +138,11 @@
 
         .el-dropdown-menu__item {
             cursor: pointer;
-        }   .theme-button {
-                margin-left: 15px;
-            }
+        }
+
+        .theme-button {
+            margin-left: 15px;
+        }
 
         .color-option {
             width: 100%;
@@ -172,9 +170,11 @@
 <div id="app">
     <div class="sidebar" :style="currentTheme.sidebar">
         <div class="sidebar-header" :style="currentTheme.sidebarHeader">
-            <h2 v-if="!isCollapse">vue2-element-admin</h2>
+            <h2 v-if="!isCollapse"></h2>
             <h2 v-else>V2</h2>
         </div>
+<%--        使用Element UI的菜单组件，动态生成菜单项。根据用户角色过滤可见菜单项。--%>
+<%--        使用v-if和v-for指令来动态显示菜单。--%>
         <el-menu
                 :default-active="activeIndex"
                 class="el-menu-vertical-demo"
@@ -182,6 +182,7 @@
                 :background-color="currentTheme.menuBackgroundColor"
                 :text-color="currentTheme.menuTextColor"
                 :active-text-color="currentTheme.menuActiveTextColor">
+<%--            使用 v-if 判断是否存在子菜单，并根据结果生成相应的菜单结构。--%>
             <template v-for="menu in filteredMenuItems">
                 <el-submenu v-if="menu.submenu" :index="menu.id" :key="menu.id">
                     <template slot="title">
@@ -205,7 +206,6 @@
     <div class="main-content">
         <div class="header">
             <div class="header-left">
-                <el-button icon="el-icon-s-fold" @click="toggleSidebar" size="small"></el-button>
                 <el-breadcrumb separator="/">
                     <el-breadcrumb-item v-for="(item, index) in breadcrumbs" :key="index">
                         <span v-if="index === 0" @click="handleHomeClick">{{ item.title }}</span>
@@ -215,8 +215,6 @@
             </div>
             <div class="header-right">
                 <el-button icon="el-icon-s-operation" @click="drawer = true" size="small" class="theme-button">主题设置</el-button>
-
-                <el-button icon="el-icon-full-screen" @click="toggleFullScreen" size="small"></el-button>
                 <el-dropdown>
                     <span class="el-dropdown-link">
                         <el-avatar size="small"
@@ -235,6 +233,7 @@
             <iframe :src="currentUrl" ref="contentFrame"></iframe>
         </div>
     </div>
+<%--    主题设置抽屉--%>
     <el-drawer
             title="主题设置"
             :visible.sync="drawer"
@@ -261,48 +260,9 @@
 
     new Vue({
         el: '#app',
-        data: { drawer: false,
+        data: {
+            drawer: false,
             themes: [
-                {
-                    name: '经典蓝',
-                    sidebar: { backgroundColor: '#1e3799' },
-                    sidebarHeader: { backgroundColor: '#1a237e' },
-                    menuBackgroundColor: '#1e3799',
-                    menuTextColor: '#ffffff',
-                    menuActiveTextColor: '#8ed1fc'
-                },
-                {
-                    name: '清新绿',
-                    sidebar: { backgroundColor: '#2ecc71' },
-                    sidebarHeader: { backgroundColor: '#27ae60' },
-                    menuBackgroundColor: '#2ecc71',
-                    menuTextColor: '#ffffff',
-                    menuActiveTextColor: '#f1c40f'
-                },
-                {
-                    name: '优雅紫',
-                    sidebar: { backgroundColor: '#8e44ad' },
-                    sidebarHeader: { backgroundColor: '#6c3483' },
-                    menuBackgroundColor: '#8e44ad',
-                    menuTextColor: '#ffffff',
-                    menuActiveTextColor: '#f39c12'
-                },
-                {
-                    name: '沉稳灰',
-                    sidebar: { backgroundColor: '#34495e' },
-                    sidebarHeader: { backgroundColor: '#2c3e50' },
-                    menuBackgroundColor: '#34495e',
-                    menuTextColor: '#ecf0f1',
-                    menuActiveTextColor: '#3498db'
-                },
-                {
-                    name: '暖阳橙',
-                    sidebar: { backgroundColor: '#e67e22' },
-                    sidebarHeader: { backgroundColor: '#d35400' },
-                    menuBackgroundColor: '#e67e22',
-                    menuTextColor: '#ffffff',
-                    menuActiveTextColor: '#3498db'
-                },
                 {
                     name: '清爽青',
                     sidebar: { backgroundColor: '#16a085' },
@@ -312,44 +272,12 @@
                     menuActiveTextColor: '#f1c40f'
                 },
                 {
-                    name: '典雅棕',
-                    sidebar: { backgroundColor: '#795548' },
-                    sidebarHeader: { backgroundColor: '#5d4037' },
-                    menuBackgroundColor: '#795548',
-                    menuTextColor: '#ffffff',
-                    menuActiveTextColor: '#ffc107'
-                },
-                {
-                    name: '沉静蓝灰',
-                    sidebar: { backgroundColor: '#607d8b' },
-                    sidebarHeader: { backgroundColor: '#455a64' },
-                    menuBackgroundColor: '#607d8b',
-                    menuTextColor: '#ffffff',
-                    menuActiveTextColor: '#ff9800'
-                },
-                {
                     name: '柔和粉',
                     sidebar: { backgroundColor: '#ec407a' },
                     sidebarHeader: { backgroundColor: '#d81b60' },
                     menuBackgroundColor: '#ec407a',
                     menuTextColor: '#ffffff',
                     menuActiveTextColor: '#ffeb3b'
-                },
-                {
-                    name: '清新薄荷',
-                    sidebar: { backgroundColor: '#26a69a' },
-                    sidebarHeader: { backgroundColor: '#00897b' },
-                    menuBackgroundColor: '#26a69a',
-                    menuTextColor: '#ffffff',
-                    menuActiveTextColor: '#ffd54f'
-                },
-                {
-                    name: '深邃蓝',
-                    sidebar: { backgroundColor: '#283593' },
-                    sidebarHeader: { backgroundColor: '#1a237e' },
-                    menuBackgroundColor: '#283593',
-                    menuTextColor: '#ffffff',
-                    menuActiveTextColor: '#4fc3f7'
                 },
                 {
                     name: '优雅米',
@@ -372,6 +300,7 @@
                 passwordModify: {title: '修改密码', url: 'passwordModify.jsp'}
             }
         },
+        // 使用计算属性 filteredMenuItems 来根据当前用户的角色过滤可见的菜单项 该计算属性遍历所有菜单项（menuItems），并检查每个菜单项的 roles 属性是否包含当前用户的角色（this.userInfo.role）。只有符合条件的菜单项才会被返回，从而实现动态显示。
         computed: {
             filteredMenuItems() {
                 return this.menuItems.filter(item => item.roles.includes(this.userInfo.role));
@@ -393,25 +322,10 @@
                     this.currentTheme = this.themes[0]; // Default theme
                 }
             },
-            toggleSidebar() {
-                this.isCollapse = !this.isCollapse;
-            },
-            toggleFullScreen() {
-                if (!document.fullscreenElement) {
-                    document.documentElement.requestFullscreen();
-                } else {
-                    if (document.exitFullscreen) {
-                        document.exitFullscreen();
-                    }
-                }
-            },
             loadContent(menuItem) {
                 if (menuItem.url) {
                     this.currentUrl = menuItem.url;
                     this.updateBreadcrumbs(menuItem);
-                    this.$nextTick(() => {
-                        this.applyPermissions();
-                    });
                 }
             },
             updateBreadcrumbs(menuItem) {
@@ -429,171 +343,33 @@
             handleHomeClick() {
                 this.loadContent(this.menuItems[0]);
             },
-            findMenuItemById(id) {
-                for (const item of this.menuItems) {
-                    if (item.id === id) return item;
-                    if (item.submenu) {
-                        const subItem = item.submenu.find(sub => sub.id === id);
-                        if (subItem) return subItem;
-                    }
-                }
-                return null;
-            },
             filteredSubmenuItems(submenu) {
                 return submenu.filter(item => item.roles.includes(this.userInfo.role));
             },
             logout() {
                 localStorage.removeItem('userInfo');
-                location.href = "login.jsp"
+                location.href = "login.jsp";
             },
             loadHeaderItem(itemKey) {
-                if (itemKey == "front") {
-                    location.href = "front/index.jsp";
-                }
                 const item = this.headerItems[itemKey];
                 if (item) {
                     this.currentUrl = item.url;
                     this.updateBreadcrumbs(item);
                 }
             },
-            applyPermissions() {
-                const iframe = this.$refs.contentFrame;
-
-                // 获取 iframe 内容
-                fetch(this.currentUrl)
-                    .then(response => response.text())
-                    .then(htmlContent => {
-                        // 创建一个临时 DOM 元素来解析 HTML
-                        const tempDiv = document.createElement('div');
-                        tempDiv.innerHTML = htmlContent;
-
-                        // 根据页面类型应用不同的权限处理
-                        if (this.currentUrl.includes('dashboard.jsp')) {
-                            this.handleDashboardPermissions(tempDiv);
-                        } else {
-                            this.removeUnauthorizedElements(tempDiv);
-                        }
-
-                        // 获取 iframe 文档
-                        const doc = iframe.contentDocument || iframe.contentWindow.document;
-                        doc.open();
-
-                        // 写入必要的 CSS 以确保样式应用正确
-                        doc.write(`
-<style>
-    /* 重置 body 的 margin 和 padding */
-    body {
-        margin: 0;
-        padding: 0;
-        font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
-        font-size: 14px;
-        font-weight: normal;
-        -webkit-font-smoothing: antialiased;
-    }
-    /* 确保所有 Element UI 组件使用默认字体大小和粗细 */
-    .el-table {
-        font-size: 14px;
-        color: #606266;
-    }
-    .el-table th {
-        background-color: #f5f7fa;
-        color: #909399;
-        font-weight: 500;
-        font-size: 14px;
-    }
-    .el-table td {
-        padding: 12px 0;
-        color: #606266;
-        font-size: 14px;
-        font-weight: normal;
-    }
-    .el-table .el-table__row:hover {
-        background-color: #f5f7fa;
-    }
-    /* 重置所有文本元素的字体粗细 */
-    p, span, div, td, th, li, a {
-        font-weight: normal;
-    }
-    /* 仅为标题设置粗体 */
-    h1, h2, h3, h4, h5, h6 {
-        font-weight: 500;
-    }
-    /* 对于 dashboard 中被隐藏的元素 */
-    [data-role].hidden {
-        display: none !important;
-        visibility: hidden !important;
-        width: 0 !important;
-        height: 0 !important;
-        overflow: hidden !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        border: 0 !important;
-    }
-</style>
-            `);
-                        doc.write(`
-<script>
-    var userInfo = ${JSON.stringify(this.userInfo).replace(/</g, '\\u003c')};
-<\/script>
-            `);
-                        doc.write(tempDiv.innerHTML);
-                        doc.close();
-                    })
-                    .catch(error => {
-                        console.error('加载 iframe 内容时出错:', error);
-                    });
-            },
-
-            handleDashboardPermissions(element) {
-                const elements = element.querySelectorAll('[data-role]');
-                elements.forEach(el => {
-                    const requiredRoles = el.getAttribute('data-role').split(',');
-                    if (!requiredRoles.includes(this.userInfo.role)) {
-                        el.classList.add('hidden');
-                    }
-                });
-            },
-
-            removeUnauthorizedElements(element) {
-                if (!element) return;
-
-                const childNodes = Array.from(element.childNodes);
-
-                for (let i = childNodes.length - 1; i >= 0; i--) {
-                    const node = childNodes[i];
-
-                    if (node.nodeType === Node.ELEMENT_NODE) {
-                        if (node.hasAttribute('data-role')) {
-                            const requiredRoles = node.getAttribute('data-role').split(',');
-                            if (!requiredRoles.includes(this.userInfo.role)) {
-                                console.log(`Removing element:`, node);
-                                node.remove();
-                            }
-                        } else {
-                            this.removeUnauthorizedElements(node);
-                        }
-                    } else if (node.nodeType === Node.TEXT_NODE) {
-                        if (!node.textContent.trim()) {
-                            node.remove();
-                        }
-                    }
-                }
-            }
-
         },
-        created() {  this.loadTheme();
+        // 在组件创建时，尝试从本地存储中获取 userInfo。如果获取成功，则将其解析并赋值给 this.userInfo。
+        created() {
+            this.loadTheme();
             const storedUserInfo = localStorage.getItem('userInfo');
             if (storedUserInfo) {
                 try {
                     this.userInfo = JSON.parse(storedUserInfo);
-                    console.log("User logged in:", this.userInfo);
                     this.loadContent(this.menuItems[0]);
                 } catch (error) {
-                    console.error("Error parsing user info:", error);
                     window.location.href = "login.jsp";
                 }
             } else {
-                console.log("No user info, redirecting to login page");
                 window.location.href = "login.jsp";
             }
         }

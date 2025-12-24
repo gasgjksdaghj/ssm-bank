@@ -1,6 +1,6 @@
 (function (window) {
-    const BASE_URL = 'http://localhost:8080'; // 替换为你的 API 基础 URL
-    const LOGIN_PAGE = '/view/j_version/login.jsp'; // 替换为你的登录页面 URL
+    const BASE_URL = 'http://localhost:8080';
+    const LOGIN_PAGE = '/view/mainpage/login.jsp';
 
     const axiosInstance = axios.create({
         baseURL: BASE_URL,

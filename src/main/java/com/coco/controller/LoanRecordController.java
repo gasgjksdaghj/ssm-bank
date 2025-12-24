@@ -13,10 +13,12 @@ import java.util.List;
 /**
  * 贷款记录管理控制器
  */
+//标记该类为RESTful控制器，表示该类中的每个方法都返回JSON格式的数据。
 @RestController
+//定义了基础URL路径为 /api/loanRecords，所有以此为基础的请求都会以此路径开头
 @RequestMapping("/api/loanRecords")
 public class LoanRecordController {
-
+//@Autowired：用于自动注入LoanRecordMapper，使得控制器可以调用其方法来执行与贷款记录相关的数据库操作。
     @Autowired
     private LoanRecordMapper loanRecordMapper;
 
@@ -25,6 +27,7 @@ public class LoanRecordController {
      * @param loanRecord 贷款记录对象
      * @return API响应
      */
+//    保存或更新贷款记录。如果传入的LoanRecord对象的ID为null，则执行插入操作；否则执行更新操作。
     @RequestMapping("/saveOrUpdate")
     public ApiResponse<Void> saveOrUpdate(@RequestBody LoanRecord loanRecord) {
         if (loanRecord.getId() == null) {
@@ -40,6 +43,7 @@ public class LoanRecordController {
      * @param id 贷款记录ID
      * @return API响应
      */
+//    批量删除贷款记录，接收一个ID列表并逐个删除。
     @DeleteMapping("/{id}")
     public ApiResponse<Void> delete(@PathVariable Integer id) {
         loanRecordMapper.deleteById(id);

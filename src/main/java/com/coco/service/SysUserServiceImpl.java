@@ -31,7 +31,7 @@ public class SysUserServiceImpl implements SysUserService {
             throw new BusinessException("注册失败");
         }
     }
-
+//调用Mapper更新用户记录，如果更新失败则抛出 BusinessException。
     @Override
     @Transactional
     public void updateUser(SysUser user) {
@@ -44,6 +44,7 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public SysUser login(String username, String password) {
         SysUser user = sysUserMapper.selectByUsername(username);
+//        使用BCrypt加密用户密码。
         if (user == null || !BCrypt.checkpw(password, user.getPassword())) {
             throw new UnauthorizedException("用户名或密码错误");
         }
@@ -107,7 +108,7 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     @Transactional
     public void resetPassword(Integer userId) {
-        String defaultPassword = "000000"; // 可以根据需求修改默认密码
+        String defaultPassword = "000000";
         String encryptedDefaultPassword = encryptPassword(defaultPassword);
         int result = sysUserMapper.resetPassword(userId, encryptedDefaultPassword);
         if (result <= 0) {

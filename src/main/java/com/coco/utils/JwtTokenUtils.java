@@ -12,13 +12,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
+//用于处理 JWT（JSON Web Token） 的工具类，包含了生成、验证和解析 JWT 的方法。
 public class JwtTokenUtils {
 
-    private static final String SECRET_KEY = "cnmsb";  // 这里替换为你的密钥
+    private static final String SECRET_KEY = "cnmsb";
     private static final long EXPIRATION = 60 * 60;  // token有效期，单位为秒
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
+//    生成 JWT。它接受一个 UserDTO 对象，包含用户的信息，并将这些信息作为负载（payload）存入 JWT 中。
     public static String generateToken(UserDTO userDTO) {
         DateTime now = DateTime.now();
         DateTime expTime = now.offsetNew(DateField.SECOND, (int) EXPIRATION);
@@ -77,7 +77,7 @@ public class JwtTokenUtils {
         Date expiresAt = jwt.getPayload().getClaimsJson().getDate(JWTPayload.EXPIRES_AT);
         return expiresAt == null || expiresAt.before(new Date());
     }
-
+//从JWT中提取用户信息并返回 UserDTO 对象。
     public static UserDTO getUserFromToken(String token) {
         try {
             JWT jwt = JWTUtil.parseToken(token);
@@ -101,32 +101,6 @@ public class JwtTokenUtils {
     }
 
     public static void main(String[] args) {
-        // 创建一个示例 UserDTO 对象
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(1);
-        userDTO.setUsername("testuser");
-        userDTO.setNickname("测试用户");
-        userDTO.setEmail("testuser@example.com");
-        userDTO.setPhone("1234567890");
-        userDTO.setAddress("测试街道123号");
-        userDTO.setRole("USER");
-        userDTO.setStatus(1);
 
-        // 生成 token
-        String token = generateToken(userDTO);
-        System.out.println("生成的 Token: " + token);
-        System.out.println("--------------------------------------------------");
-        // 验证 token
-        System.out.println("\n验证 Token:");
-        boolean isValid = validateToken(token);
-        System.out.println("Token 是否有效: " + (isValid ? "是" : "否"));
-
-        // 从 token 中获取用户信息
-        UserDTO retrievedUser = getUserFromToken(token);
-        if (retrievedUser != null) {
-            System.out.println("\n从 Token 中成功获取用户信息: " + retrievedUser);
-        } else {
-            System.out.println("\n无法从 Token 中获取用户信息");
-        }
     }
 }

@@ -146,26 +146,6 @@
   </dependencies>
   <build>
 
-    <!--  必选：生成ssm配置文件时，务必把以下内容注释  。项目运行过程mybatis如果报错，再打开、否则保留注释即可。 -->
-    <!--        <resources>-->
-    <!--            &lt;!&ndash;  静态资源过滤问题解决&ndash;&gt;-->
-    <!--            <resource>-->
-    <!--                <directory>src/main/java</directory>-->
-    <!--                <includes>-->
-    <!--                    <include>**/*.properties</include>-->
-    <!--                    <include>**/*.xml</include>-->
-    <!--                </includes>-->
-    <!--                <filtering>false</filtering>-->
-    <!--            </resource>-->
-    <!--            <resource>-->
-    <!--                <directory>src/main/resources</directory>-->
-    <!--                <includes>-->
-    <!--                    <include>**/*.properties</include>-->
-    <!--                    <include>**/*.xml</include>-->
-    <!--                </includes>-->
-    <!--                <filtering>false</filtering>-->
-    <!--            </resource>-->
-    <!--        </resources>-->
   </build>
   <repositories>
     <repository>

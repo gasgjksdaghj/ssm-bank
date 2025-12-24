@@ -14,8 +14,10 @@ import java.time.LocalDateTime;
  * 对应数据库表 sys_loan_record
  */
 @Data
+//自动生成getter、setter等方法
 @AllArgsConstructor
 @NoArgsConstructor
+//分别生成全参数构造函数和无参数构造函数。
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LoanRecord implements Serializable {
 

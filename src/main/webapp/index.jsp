@@ -4,6 +4,6 @@
 <br>
 <br>
 <br>
-<a href="/view/j_version/index.jsp">j_version_登录</a>
+<a href="/view/mainpage/index.jsp">登录</a>
 </body>
 </html>

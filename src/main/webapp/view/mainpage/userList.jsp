@@ -316,7 +316,7 @@
                     .catch(error => {
                         console.error('Error updating user status:', error);
                         this.$message.error('更新用户状态失败');
-                        row.status = row.status === 1 ? 0 : 1; // Revert the change if the update fails
+                        row.status = row.status === 1 ? 0 : 1;
                     });
             },
             saveUser() {

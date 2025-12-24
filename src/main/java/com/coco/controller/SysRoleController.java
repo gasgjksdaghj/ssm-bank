@@ -9,7 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+//@RestController：标记该类为RESTful控制器，表示该类中的每个方法都返回JSON格式的数据。
+//@RequestMapping("/role")：定义了基础URL路径为 /role，所有以此为基础的请求都会以此路径开头。
 @RestController
 @RequestMapping("/role")
 public class SysRoleController {

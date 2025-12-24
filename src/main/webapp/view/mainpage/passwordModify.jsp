@@ -119,7 +119,6 @@
             },
             logout() {
                 localStorage.removeItem('userInfo');
-                // 假设登录页面是 login.jsp
                 setTimeout(() => {
                     window.parent.location.href = 'login.jsp';
                 }, 1500);

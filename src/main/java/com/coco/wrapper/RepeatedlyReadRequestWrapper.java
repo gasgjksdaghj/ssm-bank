@@ -6,7 +6,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-
+//多次读取 HTTP 请求体
+//解析一次用于验证，解析二次用于业务逻辑。
 public class RepeatedlyReadRequestWrapper extends HttpServletRequestWrapper {
 
     private final String body;

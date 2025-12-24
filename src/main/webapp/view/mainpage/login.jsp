@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="vue2_resource/index.css">
     <script src="vue2_resource/elementui.js"></script>
     <script src="vue2_resource/axios.min.js"></script>
-<script src="vue2_resource/axiosWrapper.js"></script>
+    <script src="vue2_resource/axiosWrapper.js"></script>
     <style>
         body {
             margin: 0;
@@ -68,24 +68,6 @@
             font-size: 12px;
             color: white;
         }
-        .captcha {
-            background-color: #f0f2f5;
-            height: 40px;
-            line-height: 40px;
-            text-align: center;
-            cursor: pointer;
-            user-select: none;
-        }
-        .captcha-item {
-            display: inline-block;
-            margin: 0 5px;
-            font-size: 18px;
-            font-weight: bold;
-            vertical-align: middle;
-            transform-origin: center;
-        }
-        .captcha-item.number { color: #409EFF; }
-        .captcha-item.symbol { color: #F56C6C; }
         .other-login-icons {
             text-align: center;
             margin-top: 10px;
@@ -106,7 +88,7 @@
 <div id="app">
     <div class="login-container">
         <div class="login-image">
-            <img src="images/1.svg" alt="登录插图" style="max-width: 80%; max-height: 80%;">
+            <img src="images/1.jpg" alt="登录插图" style="width: 100%; height: 100%; object-fit: cover;">
         </div>
         <div class="login-form">
             <div class="login-title">
@@ -138,25 +120,9 @@
                         </el-option>
                     </el-select>
                 </el-form-item>
-                <el-form-item prop="captcha">
-                    <el-row :gutter="10">
-                        <el-col :span="14">
-                            <el-input v-model="form.captcha" placeholder="验证码"></el-input>
-                        </el-col>
-                        <el-col :span="10">
-                            <div @click="refreshCaptcha" class="captcha">
-                                <span v-for="(item, index) in captchaItems" :key="index"
-                                      :class="['captcha-item', item.type]"
-                                      :style="{ transform: `rotate(${item.rotation}deg)` }">
-                                    {{ item.value }}
-                                </span>
-                            </div>
-                        </el-col>
-                    </el-row>
-                </el-form-item>
                 <el-form-item v-if="isLogin">
                     <el-checkbox v-model="form.remember">记住我</el-checkbox>
-                    <el-button type="text" style="float: right;">忘记密码</el-button>
+                    <el-button type="text" style="float: right;"></el-button>
                 </el-form-item>
                 <el-form-item>
                     <el-button type="primary" @click="submitForm('form')" style="width: 100%;" :loading="loading">
@@ -175,11 +141,13 @@
             </div>
         </div>
     </div>
-    <div class="copyright">
-        Copyright © 2021 - 2024 youlai.tech All Rights Reserved. 粤ICP备2000649号-2
-    </div>
-</div>
 
+</div>
+<%--isLogin: 布尔值，决定当前是登录模式还是注册模式。--%>
+<%--loading: 控制按钮的加载状态。--%>
+<%--form: 存储用户输入的数据，包括用户名、密码、确认密码等。--%>
+<%--rules: 表单验证规则，确保用户输入有效。--%>
+<%--roleOptions: 存储可选的角色列表，用于注册时选择角色。--%>
 <script>
     new Vue({
         el: '#app',
@@ -210,7 +178,6 @@
                     username: '',
                     password: '',
                     confirmPassword: '',
-                    captcha: '',
                     remember: false,
                     role: ''
                 },
@@ -218,16 +185,10 @@
                     username: [{required: true, message: '请输入用户名', trigger: 'blur'}],
                     password: [{validator: validatePass, trigger: 'blur'}],
                     confirmPassword: [{validator: validatePass2, trigger: 'blur'}],
-                    captcha: [
-                        {required: true, message: '请输入验证码', trigger: 'blur'},
-                        {validator: this.validateCaptcha, trigger: 'blur'}
-                    ],
                     role: [{required: true, message: '请选择注册角色', trigger: 'change'}]
                 },
-                captchaItems: [],
-                captchaResult: 0,
                 roleOptions: []
-            }
+            };
         },
         methods: {
             toggleLoginRegister() {
@@ -239,7 +200,6 @@
             },
             resetForm() {
                 this.$refs.form.resetFields();
-                this.refreshCaptcha();
             },
             submitForm(formName) {
                 this.$refs[formName].validate((valid) => {
@@ -274,13 +234,11 @@
                         }, 1500);
                     } else {
                         this.$message.error(response.msg || '登录失败');
-                        this.refreshCaptcha();
                     }
                 })
                     .catch(error => {
                         console.error('登录错误:', error);
                         this.$message.error('登录失败，请稍后重试');
-                        this.refreshCaptcha();
                     })
                     .finally(() => {
                         this.loading = false;
@@ -305,51 +263,15 @@
                             this.resetForm();
                         } else {
                             this.$message.error(response.msg || '注册失败');
-                            this.refreshCaptcha();
                         }
                     })
                     .catch(error => {
                         console.error('注册错误:', error);
                         this.$message.error('注册失败，请稍后重试');
-                        this.refreshCaptcha();
                     })
                     .finally(() => {
                         this.loading = false;
                     });
-            },
-            refreshCaptcha() {
-                const operations = ['+', '-', '*'];
-                const num1 = Math.floor(Math.random() * 10);
-                const num2 = Math.floor(Math.random() * 10);
-                const operation = operations[Math.floor(Math.random() * operations.length)];
-                this.captchaItems = [
-                    {value: num1, type: 'number', rotation: this.getRandomRotation()},
-                    {value: operation, type: 'symbol', rotation: this.getRandomRotation()},
-                    {value: num2, type: 'number', rotation: this.getRandomRotation()},
-                    {value: '=', type: 'symbol', rotation: this.getRandomRotation()}
-                ];
-                switch (operation) {
-                    case '+':
-                        this.captchaResult = num1 + num2;
-                        break;
-                    case '-':
-                        this.captchaResult = num1 - num2;
-                        break;
-                    case '*':
-                        this.captchaResult = num1 * num2;
-                        break;
-                }
-                this.form.captcha = ''; // 清空验证码输入框
-            },
-            validateCaptcha(rule, value, callback) {
-                if (parseInt(value) !== this.captchaResult) {
-                    callback(new Error('验证码错误'));
-                } else {
-                    callback();
-                }
-            },
-            getRandomRotation() {
-                return Math.floor(Math.random() * 51) - 25;
             },
             notifyDevelopment() {
                 this.$message({
@@ -371,11 +293,8 @@
                         this.$message.error('获取角色列表失败，请稍后重试');
                     });
             }
-        },
-        mounted() {
-            this.refreshCaptcha();
         }
-    })
+    });
 </script>
 </body>
 </html>

@@ -56,12 +56,12 @@
                 :header-cell-style="{background:'#f5f7fa',color:'#606266'}"
         >
             <el-table-column type="selection" width="55"></el-table-column>
-            <el-table-column prop="id" label="🔑 ID" width="80"></el-table-column>
-            <el-table-column prop="userId" label="👤 用户ID" ></el-table-column>
-            <el-table-column prop="transactionType" label="💳 交易类型" ></el-table-column>
-            <el-table-column prop="amount" label="💰 交易金额" width="120"></el-table-column>
-            <el-table-column prop="transactionTime" label="⏰ 交易时间" ></el-table-column>
-            <el-table-column prop="targetUserId" label="🎯 目标用户ID" ></el-table-column>
+            <el-table-column prop="id" label=" ID" width="80"></el-table-column>
+            <el-table-column prop="userId" label=" 用户ID" ></el-table-column>
+            <el-table-column prop="transactionType" label=" 交易类型" ></el-table-column>
+            <el-table-column prop="amount" label=" 交易金额" width="120"></el-table-column>
+            <el-table-column prop="transactionTime" label=" 交易时间" ></el-table-column>
+            <el-table-column prop="targetUserId" label=" 目标用户ID" ></el-table-column>
         </el-table>
 
         <el-pagination

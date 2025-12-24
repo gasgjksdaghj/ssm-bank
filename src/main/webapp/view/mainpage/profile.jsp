@@ -106,12 +106,7 @@
                 <el-form-item label="角色">
                     <el-input v-model="user.role" disabled></el-input>
                 </el-form-item>
-                <el-form-item label="创建时间">
-                    <el-input v-model="user.createTime" disabled></el-input>
-                </el-form-item>
-                <el-form-item label="更新时间">
-                    <el-input v-model="user.updateTime" disabled></el-input>
-                </el-form-item>
+
             </el-form>
             <div class="form-actions">
                 <el-button type="primary" @click="toggleEdit">{{ isEditing ? '保存' : '编辑' }}</el-button>
@@ -238,7 +233,7 @@
             },
             handleAvatarSuccess(res, file) {
                 console.log(res)
-                this.user.avatarUrl = res; // 假设服务器返回的数据中包含了新的头像URL
+                this.user.avatarUrl = res;
                 // 更新 localStorage 中的用户信息
                 localStorage.setItem('userInfo', JSON.stringify(this.user));
                 // 调用更新用户信息的接口
@@ -367,9 +362,8 @@
             },
             recordTransaction(type, amount, targetUserId = null) {
                 const formatDateTime = (date) => {
-                    // 加上8小时
                     date.setHours(date.getHours() + 8);
-                    return date.toISOString().slice(0, 19); // This will give format: 2024-10-17T11:10:57
+                    return date.toISOString().slice(0, 19);
                 };
 
                 const transaction = {
@@ -388,7 +382,7 @@
                     .catch(error => {
                         console.error('Error recording transaction:', error);
                         this.$message.error('保存交易记录失败');
-                        throw error; // Re-throw the error for upstream handling if needed
+                        throw error;
                     });
             }
         },

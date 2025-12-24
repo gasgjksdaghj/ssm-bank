@@ -1,5 +1,5 @@
 package com.coco.controller;
-
+//主RESTful API控制器，负责用户管理功能，包括用户的注册、登录、更新、删除和查询等操作
 import com.coco.pojo.SysUser;
 import com.coco.service.SysUserService;
 import com.coco.utils.ApiResponse;
@@ -81,6 +81,7 @@ public class UserController {
         }
         PageHelper.startPage(pageNum, pageSize);
         List<SysUser> users = sysUserService.getUsersByCreateTimeRange(startTime, endTime, nickname);
+//        调用服务层的方法 getUsersByCreateTimeRange，传入开始时间、结束时间和昵称，以获取符合条件的用户列表。
         PageInfo<SysUser> pageInfo = new PageInfo<>(users);
         return ApiResponse.success(pageInfo);
     }
